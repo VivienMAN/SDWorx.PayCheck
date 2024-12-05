@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Radzen;
 
 namespace SDWorx.PayCheck;
 
@@ -15,6 +16,7 @@ public static class MauiProgram
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
+        builder.Services.AddRadzenComponents();
         builder.Logging.AddDebug();
 #endif
 
