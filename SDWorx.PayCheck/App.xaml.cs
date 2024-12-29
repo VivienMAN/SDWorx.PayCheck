@@ -9,12 +9,12 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        var windows  = new Window(new MainPage()) { Title = "SDWorx.PayCheck" };
+        var windows  = new Window(new MainPage()) { Title = "PayCheck" };
         windows.MinimumWidth = 1200;
-        windows.MinimumHeight = 700;
-        windows.Height = 700;
+        windows.MinimumHeight = 650;
+        windows.Height = 650;
         windows.Width = 1200;
-        windows.MaximumHeight = 700;
+        windows.MaximumHeight = 650;
         windows.MaximumWidth = 1200;
         return windows;
     }

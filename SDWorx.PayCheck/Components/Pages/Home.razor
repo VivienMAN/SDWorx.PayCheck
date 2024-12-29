@@ -8,7 +8,6 @@
 <div style="position:relative;">
     <img src="data:image/png;base64,@ImageBase64"
          style="position:absolute; top:10px; right:30px; width:200px; height:auto; z-index:1000;"/>
-
     <RadzenCard Style="margin:20px">
         <div style="display:flex; gap:20px; align-items:center;">
             <div style="display:flex; flex-direction:column; gap:10px;">
@@ -22,18 +21,11 @@
                         style="width:15px; height:15px; border-radius:50%; background:@(File2Uploaded ? "green" : "red"); margin-right:5px;"></div>
                     Ficher EMPLID - DEPT #2
                 </div>
-                <div style="display:flex; align-items:center;">
-                    <div
-                        style="width:15px; height:15px; border-radius:50%; background:@(File3Uploaded ? "green" : "red"); margin-right:5px;"></div>
-                    Fichier CSV #3
-                </div>
             </div>
             <Field>
-                <FileEdit Changed="@OnChanged" />
+                <FileEdit Changed="@OnChanged"/>
             </Field>
-
         </div>
-
         <br/>
         <div style="display:flex; gap:20px; align-items:center;">
             <RadzenDatePicker @bind-Value="Date1" Style="width:200px" Placeholder="Pay Date" DateFormat="dd/MM/yyyy"/>
@@ -43,8 +35,15 @@
                               DateFormat="dd/MM/yyyy"/>
         </div>
         <br/>
+        <div style="text-align:center; margin-top:20px;">
+            <RadzenButton Text="Reset" Click="@Reset"/>
+            <RadzenButton Text="Launch"
+                          Disabled="@(File1Uploaded == false || File2Uploaded == false || !Date1.HasValue || !Date2.HasValue || !Date3.HasValue)"
+                          Click="@OnLaunchClick"/>
+        </div>
     </RadzenCard>
 </div>
+
 @code {
 
 }
