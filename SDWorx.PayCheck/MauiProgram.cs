@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blazorise;
+using Blazorise.Bootstrap5;
+using Microsoft.Extensions.Logging;
 using Radzen;
 
 namespace SDWorx.PayCheck;
@@ -17,6 +19,12 @@ public static class MauiProgram
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Services.AddRadzenComponents();
+        builder.Services
+            .AddBlazorise( options =>
+            {
+                options.Immediate = true;
+            } )
+            .AddBootstrap5Providers();
         builder.Logging.AddDebug();
 #endif
 

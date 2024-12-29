@@ -1,17 +1,16 @@
 ﻿@page "/"
 @inherits HomeBase
 
+@using Blazorise
 @using Radzen
 @using Radzen.Blazor
 
 <div style="position:relative;">
-    <!-- Image en base64 dans le coin supérieur droit -->
     <img src="data:image/png;base64,@ImageBase64"
          style="position:absolute; top:10px; right:30px; width:200px; height:auto; z-index:1000;"/>
 
     <RadzenCard Style="margin:20px">
         <div style="display:flex; gap:20px; align-items:center;">
-            <!-- Section pour les voyants d'upload -->
             <div style="display:flex; flex-direction:column; gap:10px;">
                 <div style="display:flex; align-items:center;">
                     <div
@@ -28,32 +27,14 @@
                         style="width:15px; height:15px; border-radius:50%; background:@(File3Uploaded ? "green" : "red"); margin-right:5px;"></div>
                     Fichier CSV #3
                 </div>
-            </div> 
-            <RadzenFileInput @bind-FileSize=@fileSize TValue="byte[]"
-                             Change=@(args => OnChange(args, "FileInput"))
-                             Error=@(args => OnError(args, "FileInput"))
-                             InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "select file" } })"
-                             ChooseText="Glisser ou Choisir un fichier CSV"
-                             Accept=".csv, .xls, .xlsx"
-                          
-                             Style="width:500px; height:150px; border: 2px dashed #ccc; display:flex; align-items:center; justify-content:center; padding:20px;"
-            />
+            </div>
+            <Field>
+                <FileEdit Changed="@OnChanged" />
+            </Field>
 
-            <!-- Zone d'upload élargie -->
-            @* <RadzenFileInput *@
-            @*     @bind-FileSize=@fileSize *@
-            @*     ChooseText="Glisser ou Choisir un fichier CSV" *@
-            @*     Change=@(args => OnChange(args, "FileInput")) *@
-            @*     Error=@(args => OnError(args, "FileInput")) *@
-            @*     Accept=".csv, .xls, .xlsx" *@
-            @*     InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "select file" } })" *@
-            @*     Style="width:500px; height:150px; border: 2px dashed #ccc; display:flex; align-items:center; justify-content:center; padding:20px;"/> *@
         </div>
 
         <br/>
-
-        <!-- Dates à saisir -->
-        <!-- Dates à saisir -->
         <div style="display:flex; gap:20px; align-items:center;">
             <RadzenDatePicker @bind-Value="Date1" Style="width:200px" Placeholder="Pay Date" DateFormat="dd/MM/yyyy"/>
             <RadzenDatePicker @bind-Value="Date2" Style="width:200px" Placeholder="Period Begin"
@@ -64,3 +45,6 @@
         <br/>
     </RadzenCard>
 </div>
+@code {
+
+}
