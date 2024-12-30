@@ -1,6 +1,7 @@
 ﻿using Blazorise;
 using Blazorise.Bootstrap5;
 using Microsoft.Extensions.Logging;
+using OfficeOpenXml;
 using Radzen;
 
 namespace SDWorx.PayCheck;
@@ -9,6 +10,8 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -20,10 +23,7 @@ public static class MauiProgram
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Services.AddRadzenComponents();
         builder.Services
-            .AddBlazorise( options =>
-            {
-                options.Immediate = true;
-            } )
+            .AddBlazorise(options => { options.Immediate = true; })
             .AddBootstrap5Providers();
         builder.Logging.AddDebug();
 #endif

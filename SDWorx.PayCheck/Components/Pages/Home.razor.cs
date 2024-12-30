@@ -6,7 +6,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Blazorise;
 using Microsoft.JSInterop;
+using PayCheck;
+using PayCheck.Import;
 using Radzen.Blazor;
+using SDWorx.PayCheck.Export;
 
 namespace SDWorx.PayCheck.Components.Pages;
 
@@ -64,8 +67,21 @@ public class HomeBase : ComponentBase
 
     protected void OnLaunchClick()
     {
+        var traitementExcel = new TraietementExcel();
+        List<Employe> lEmploye = traitementExcel.ProcessExcelFile(imemFileMemoryStream);
+        var traitementCsv = new TraietementFichierCsv();
+        List<EmployeId> employeIdList = traitementCsv.ProcessCsvFile(csvFileMemoryStream);
+        DateTime payDate = Date1!.Value;
+        List<EmployeId> lEmployeId = employeIdList;
+        DateTime beginDate = Date2!.Value;
+        DateTime endDate = Date3!.Value;
+        string csv =
+            new CsvGenerator().GenerateCsv(FichierDeSortie.GenerateData(lEmploye, payDate, lEmployeId, beginDate,
+                endDate));
+
         // Logique à exécuter lorsque le bouton "Launch" est cliqué
         Console.WriteLine("Bouton Launch cliqué !");
+        Reset();
     }
 
     protected void Reset()
@@ -102,7 +118,10 @@ public class HomeBase : ComponentBase
         );
 
         // Vérification du mot de passe
-        if (result != "1234")
+        var today = DateTime.Today;
+        string password = $"{today.Day * today.Month}{today.Year % 100}{today.Day + 30}";
+
+        if (result != password)
         {
             // Si le mot de passe est invalide, on ferme l'application (onglet)
             Application.Current?.Quit();
@@ -123,12 +142,14 @@ public class HomeBase : ComponentBase
             string fileExtension = Path.GetExtension(file.Name).ToLower();
             if (fileExtension == ".xlsx" && Regex.IsMatch(file.Name, ExcelFilePattern))
             {
+                imemFileMemoryStream = new MemoryStream();
                 await file.OpenReadStream(long.MaxValue).CopyToAsync(imemFileMemoryStream);
                 Console.WriteLine("IMEM.xlsx file uploaded successfully.");
                 File1Uploaded = true;
             }
             else if (fileExtension == ".csv" && Regex.IsMatch(file.Name, CsvFilePattern))
             {
+                csvFileMemoryStream = new MemoryStream();
                 await file.OpenReadStream(long.MaxValue).CopyToAsync(csvFileMemoryStream);
                 Console.WriteLine("CSV file uploaded successfully.");
                 File2Uploaded = true;
