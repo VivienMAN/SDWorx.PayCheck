@@ -138,8 +138,13 @@ namespace PayCheck
                 int columns = worksheet.Dimension.Columns;
                 int num = 5;
                 int Row1 = 3;
-                for (int Col1 = 3; Col1 <= columns; Col1 += 2)
+                for (int Col1 = 3;; Col1 += 2)
                 {
+                    // Vérifiez si la cellule est vide avant de continuer
+                    if (worksheet.Cells[Row1, Col1].Value == null)
+                        break;
+
+
                     Employe employeeData = ExtractEmployeeData(worksheet.Cells[Row1, Col1].Value?.ToString());
                     Console.WriteLine("Processing employee: " + employeeData.FullName);
                     for (int Row2 = num; Row2 <= rows; ++Row2)
@@ -232,7 +237,7 @@ namespace PayCheck
             return !flag ? (LigneDePaie)null : ligne;
         }
 
-        private  string GetLibeleFromMap(Dictionary<string, List<string>> map, string libele)
+        private string GetLibeleFromMap(Dictionary<string, List<string>> map, string libele)
         {
             List<string> stringList = null;
             if (!map.TryGetValue(libele, out stringList))
@@ -240,7 +245,7 @@ namespace PayCheck
             return stringList.Count <= 1 ? stringList[0] : stringList[1];
         }
 
-        public  Employe ExtractEmployeeData(string inputText)
+        public Employe ExtractEmployeeData(string inputText)
         {
             Employe employeeData = new Employe();
             string[] strArray = inputText.Split(' ', (StringSplitOptions)0);
