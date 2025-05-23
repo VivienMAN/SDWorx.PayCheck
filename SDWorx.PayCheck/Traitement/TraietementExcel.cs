@@ -138,9 +138,10 @@ namespace PayCheck
                 int columns = worksheet.Dimension.Columns;
                 int num = 5;
                 int Row1 = 3;
-                for (int Col1 = 3; Col1 <= columns; Col1 += 3)
+                for (int Col1 = 3; Col1 <= columns; Col1 += 2)
                 {
                     Employe employeeData = ExtractEmployeeData(worksheet.Cells[Row1, Col1].Value?.ToString());
+                    Console.WriteLine("Processing employee: " + employeeData.FullName);
                     for (int Row2 = num; Row2 <= rows; ++Row2)
                     {
                         string code = worksheet.Cells[Row2, 1].Value?.ToString();
