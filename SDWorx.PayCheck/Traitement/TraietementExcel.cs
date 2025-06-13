@@ -151,7 +151,7 @@ namespace PayCheck
                     {
                         string code = worksheet.Cells[Row2, 1].Value?.ToString();
                         string libele = worksheet.Cells[Row2, 2].Value?.ToString();
-                        for (int Col2 = Col1 + 1; Col2 < Col1 + 3; ++Col2)
+                        for (int Col2 = Col1; Col2 < Col1 + 2; ++Col2)
                         {
                             LigneDePaie ligne = new LigneDePaie()
                             {
